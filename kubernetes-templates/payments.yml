@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payments
+  template:
+    metadata:
+      labels:
+        app: payments
+    spec:
+      containers:
+      - image: lorenzogl/ubademy-payments:GIT_SHA_SECRET
+        imagePullPolicy: Always
+        name: payments
+        env:
+        - name: DATABASE_URL
+          value: DATABASE_URL_SECRET
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP
+  ports:
+  - name: "payments"
+    port: 80
+  - name: "database"
+    port: 5432
+  selector:
+    app: payments

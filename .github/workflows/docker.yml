@@ -17,39 +17,41 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           tags: ${{ github.sha }}
 
-#  push-okteto-pipeline:
-#    needs: publish-docker-image
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: checkout
-#        uses: actions/checkout@master
-#
-#      - name: Create and populate kubernetes/chat.yml file
-#        env:
-#          GIT_SHA_SECRET: ${{ github.sha }}
-#        run: |
-#          touch kubernetes/chat.yml
-#          sed "s|GIT_SHA_SECRET|$GIT_SHA_SECRET|" kubernetes-templates/chat.yml > kubernetes/chat.yml
-#          echo "cat kubernetes/chat.yml"
-#          cat kubernetes/chat.yml
-#
-#          echo "ls -a ."
-#          ls -a .
-#
-#          echo "ls -a ${{ github.workspace }}"
-#          ls -a ${{ github.workspace }}
-#        shell: bash
-#
-#      - uses: okteto/login@master
-#        with:
-#          token: ${{ secrets.OKTETO_TOKEN }}
-#
-#      - name: "Activate personal namespace"
-#        uses: okteto/namespace@master
-#        with:
-#          namespace: lorenzolgz
-#
-#      - name: "Create deployment"
-#        uses: okteto/apply@master
-#        with:
-#          manifest: kubernetes
+  push-okteto-pipeline:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    needs: publish-docker-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+
+      - name: Create and populate kubernetes/payments.yml file
+        env:
+          GIT_DB_SECRET: ${{ secrets.DATABASE_URL }}
+          GIT_SHA_SECRET: ${{ github.sha }}
+        run: |
+          touch kubernetes/payments.yml
+          sed "s|DATABASE_URL_SECRET|$GIT_DB_SECRET|" kubernetes-templates/payments.yml | sed "s|GIT_SHA_SECRET|$GIT_SHA_SECRET|" > kubernetes/payments.yml
+          echo "cat kubernetes/payments.yml"
+          cat kubernetes/payments.yml
+
+          echo "ls -a ."
+          ls -a .
+
+          echo "ls -a ${{ github.workspace }}"
+          ls -a ${{ github.workspace }}
+        shell: bash
+
+      - uses: okteto/login@master
+        with:
+          token: ${{ secrets.OKTETO_TOKEN }}
+
+      - name: "Activate personal namespace"
+        uses: okteto/namespace@master
+        with:
+          namespace: lorenzolgz
+
+      - name: "Create deployment"
+        uses: okteto/apply@master
+        with:
+          manifest: kubernetes
