@@ -40,7 +40,10 @@ const findById = async id => {
   try {
     const { rows } = await client.query("SELECT * FROM " + tableName + " WHERE ID = $1", [id]);
 
+    console.log("wallet_repository found", JSON.stringify(rows));
+
     if (rows[0]) {
+      console.log("wallet_repository will return", JSON.stringify(WalletMapper.mapToWallet(rows[0])));
       return WalletMapper.mapToWallet(rows[0]);
     } else {
       return null;
