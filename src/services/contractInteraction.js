@@ -1,11 +1,27 @@
 const ethers = require("ethers");
 const getDepositHandler = require("../handlers/getDepositHandler");
+const deposits = require("../service/deposit_service");
 
 const getContract = (config, wallet) => {
   return new ethers.Contract(config.contractAddress, config.contractAbi, wallet);
 };
 
-const deposits = {};
+const someMonth = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const d = new Date();
+let aMonth = someMonth[d.getMonth()];
 
 const deposit = ({ config }) => async (senderWallet, amountToSend) => {
   const basicPayments = await getContract(config, senderWallet);
@@ -13,15 +29,19 @@ const deposit = ({ config }) => async (senderWallet, amountToSend) => {
     value: await ethers.utils.parseEther(amountToSend).toHexString(),
   });
   tx.wait(1).then(
-    receipt => {
+    async receipt => {
       console.log("Transaction mined");
       const firstEvent = receipt && receipt.events && receipt.events[0];
       console.log(firstEvent);
       if (firstEvent && firstEvent.event == "DepositMade") {
-        deposits[tx.hash] = {
-          senderAddress: firstEvent.args.sender,
-          amountSent: firstEvent.args.amount,
-        };
+        const someDeposit = await deposits.create({
+          id: tx.hash.toString(),
+          sender_address: firstEvent.args.sender.address,
+          amount: firstEvent.args.amount.toString(),
+          wallet_id: senderWallet.id,
+          month: parseInt(aMonth),
+          year: d.getFullYear(),
+        });
       } else {
         console.error(`Payment not created in tx ${tx.hash}`);
       }
@@ -40,7 +60,7 @@ const deposit = ({ config }) => async (senderWallet, amountToSend) => {
 };
 
 const getDepositReceipt = ({}) => async depositTxHash => {
-  return deposits[depositTxHash];
+  return deposits.findById(depositTxHash);
 };
 
 module.exports = dependencies => ({

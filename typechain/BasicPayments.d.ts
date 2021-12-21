@@ -21,6 +21,7 @@ import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
+// @ts-ignore
 interface BasicPaymentsInterface extends ethers.utils.Interface {
   functions: {
     "deposit()": FunctionFragment;
@@ -81,8 +82,11 @@ interface BasicPaymentsInterface extends ethers.utils.Interface {
 }
 
 export class BasicPayments extends Contract {
+  // @ts-ignore
   connect(signerOrProvider: Signer | Provider | string): this;
+  // @ts-ignore
   attach(addressOrName: string): this;
+  // @ts-ignore
   deployed(): Promise<this>;
 
   on(event: EventFilter | string, listener: Listener): this;
@@ -91,6 +95,7 @@ export class BasicPayments extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
+  // @ts-ignore
   interface: BasicPaymentsInterface;
 
   functions: {
@@ -231,6 +236,7 @@ export class BasicPayments extends Contract {
     PaymentMade(receiver: string | null, amount: null): EventFilter;
   };
 
+  // @ts-ignore
   estimateGas: {
     deposit(overrides?: PayableOverrides): Promise<BigNumber>;
 
@@ -274,6 +280,7 @@ export class BasicPayments extends Contract {
     ): Promise<BigNumber>;
   };
 
+  // @ts-ignore
   populateTransaction: {
     deposit(overrides?: PayableOverrides): Promise<PopulatedTransaction>;
 
