@@ -1,7 +1,5 @@
-import { DepositEntity } from "../entity/deposit_entity";
-import { Deposit } from "../../model/deposit";
 
-export const mapToDeposit = (depositEntity: DepositEntity): Deposit => {
+export const mapToDeposit = depositEntity => {
   return {
     id: depositEntity.id,
     wallet_id: depositEntity.wallet_id,
@@ -12,7 +10,7 @@ export const mapToDeposit = (depositEntity: DepositEntity): Deposit => {
   };
 };
 
-export const mapToDepositArray = (DepositsEntities: DepositEntity[]): Deposit[] => {
+export const mapToDepositArray = DepositsEntities => {
   const deposits = [];
 
   for (const DepositEntity of DepositsEntities) {

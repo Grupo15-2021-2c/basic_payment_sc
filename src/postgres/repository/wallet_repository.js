@@ -1,10 +1,9 @@
-import { Wallet } from "../../model/wallet";
 import { connectionPool } from "../connection_pool";
 import * as WalletMapper from "../mapping/wallet_mapper";
 
 const tableName = "WALLET";
 
-export const create = async (newWallet: Wallet): Promise<Wallet> => {
+export const create = async newWallet => {
   const client = await connectionPool.connect();
 
   try {
@@ -21,7 +20,7 @@ export const create = async (newWallet: Wallet): Promise<Wallet> => {
   }
 };
 
-export const findAll = async (): Promise<Wallet[]> => {
+export const findAll = async () => {
   const client = await connectionPool.connect();
 
   try {
@@ -35,7 +34,7 @@ export const findAll = async (): Promise<Wallet[]> => {
   }
 };
 
-export const findById = async (id: number): Promise<Wallet | null> => {
+export const findById = async id => {
   const client = await connectionPool.connect();
 
   try {
@@ -53,7 +52,7 @@ export const findById = async (id: number): Promise<Wallet | null> => {
   }
 };
 
-export const remove = async (id: number): Promise<void> => {
+export const remove = async id => {
   const client = await connectionPool.connect();
 
   try {
@@ -65,7 +64,7 @@ export const remove = async (id: number): Promise<void> => {
   }
 };
 
-export const count = async (): Promise<any | null> => {
+export const count = async () => {
   const client = await connectionPool.connect();
 
   try {

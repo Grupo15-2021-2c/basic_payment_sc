@@ -1,10 +1,9 @@
-import { Deposit } from "../../model/deposit";
 import { connectionPool } from "../connection_pool";
 import * as DepositMapper from "../mapping/deposit_mapper";
 
 const tableName = "DEPOSIT";
 
-export const create = async (newDeposit: Deposit): Promise<Deposit> => {
+export const create = async newDeposit => {
   const client = await connectionPool.connect();
 
   try {
@@ -23,7 +22,7 @@ export const create = async (newDeposit: Deposit): Promise<Deposit> => {
   }
 };
 
-export const findAll = async (): Promise<Deposit[]> => {
+export const findAll = async () => {
   const client = await connectionPool.connect();
 
   try {
@@ -37,7 +36,7 @@ export const findAll = async (): Promise<Deposit[]> => {
   }
 };
 
-export const findById = async (id: number): Promise<Deposit | null> => {
+export const findById = async id => {
   const client = await connectionPool.connect();
 
   try {
@@ -55,7 +54,7 @@ export const findById = async (id: number): Promise<Deposit | null> => {
   }
 };
 
-export const remove = async (id: number): Promise<void> => {
+export const remove = async id => {
   const client = await connectionPool.connect();
 
   try {
