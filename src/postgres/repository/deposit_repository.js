@@ -10,7 +10,7 @@ const create = async newDeposit => {
     const { rows } = await client.query(
       "INSERT INTO " +
         tableName +
-        " (WALLET_ID, SENDER_ADDRESS, AMOUNT, MONTH, YEAR) VALUES ($1, $2, $3, $4) RETURNING *",
+        " (WALLET_ID, SENDER_ADDRESS, AMOUNT, MONTH, YEAR) VALUES ($1, $2, $3, $4, $5) RETURNING *",
       [newDeposit.wallet_id, newDeposit.sender_address, newDeposit.amount, newDeposit.month, newDeposit.year],
     );
 
