@@ -68,7 +68,7 @@ metadata:
   labels:
     app: postgresql-db
 data:
-  POSTGRES_DB: payments
+  POSTGRES_DB: payment
   POSTGRES_USER: generic
   POSTGRES_PASSWORD: changeme
   PGDATA: /data/pgdata
