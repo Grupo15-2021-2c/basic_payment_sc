@@ -1,10 +1,10 @@
-import { connectionPool } from "../connection_pool";
-import * as WalletMapper from "../mapping/wallet_mapper";
+const connectionPool = require("../connection_pool");
+const WalletMapper = require("../mapping/wallet_mapper");
 
 const tableName = "WALLET";
 
-export const create = async newWallet => {
-  const client = await connectionPool.connect();
+const create = async newWallet => {
+  const client = await connectionPool.connectionPool.connect();
 
   try {
     const { rows } = await client.query(
@@ -20,7 +20,7 @@ export const create = async newWallet => {
   }
 };
 
-export const findAll = async () => {
+const findAll = async () => {
   const client = await connectionPool.connect();
 
   try {
@@ -34,7 +34,7 @@ export const findAll = async () => {
   }
 };
 
-export const findById = async id => {
+const findById = async id => {
   const client = await connectionPool.connect();
 
   try {
@@ -52,7 +52,7 @@ export const findById = async id => {
   }
 };
 
-export const remove = async id => {
+const remove = async id => {
   const client = await connectionPool.connect();
 
   try {
@@ -64,7 +64,7 @@ export const remove = async id => {
   }
 };
 
-export const count = async () => {
+const count = async () => {
   const client = await connectionPool.connect();
 
   try {
@@ -80,4 +80,12 @@ export const count = async () => {
   } finally {
     client.release();
   }
+};
+
+module.exports = {
+  create,
+  findAll,
+  findById,
+  count,
+  remove,
 };

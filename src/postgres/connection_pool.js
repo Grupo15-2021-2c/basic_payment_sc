@@ -1,4 +1,6 @@
-import { Pool } from "pg";
-import { config } from "./config";
+const pg = require("pg");
+const config = require("./config");
 
-export const connectionPool = new Pool(config);
+const connectionPool = new pg.Pool(config.config);
+
+module.exports = { connectionPool };

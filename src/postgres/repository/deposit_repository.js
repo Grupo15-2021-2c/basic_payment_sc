@@ -1,10 +1,10 @@
-import { connectionPool } from "../connection_pool";
-import * as DepositMapper from "../mapping/deposit_mapper";
+const connectionPool = require("../connection_pool");
+const DepositMapper = require("../mapping/deposit_mapper");
 
 const tableName = "DEPOSIT";
 
-export const create = async newDeposit => {
-  const client = await connectionPool.connect();
+const create = async newDeposit => {
+  const client = await connectionPool.connectionPool.connect();
 
   try {
     const { rows } = await client.query(
@@ -22,7 +22,7 @@ export const create = async newDeposit => {
   }
 };
 
-export const findAll = async () => {
+const findAll = async () => {
   const client = await connectionPool.connect();
 
   try {
@@ -36,7 +36,7 @@ export const findAll = async () => {
   }
 };
 
-export const findById = async id => {
+const findById = async id => {
   const client = await connectionPool.connect();
 
   try {
@@ -54,7 +54,7 @@ export const findById = async id => {
   }
 };
 
-export const remove = async id => {
+const remove = async id => {
   const client = await connectionPool.connect();
 
   try {
@@ -64,4 +64,11 @@ export const remove = async id => {
   } finally {
     client.release();
   }
+};
+
+module.exports = {
+  remove,
+  findById,
+  findAll,
+  create,
 };

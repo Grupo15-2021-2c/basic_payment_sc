@@ -1,5 +1,4 @@
-
-export const mapToWallet = walletEntity => {
+const mapToWallet = walletEntity => {
   return {
     id: walletEntity.id,
     user_id: walletEntity.user_id,
@@ -8,7 +7,7 @@ export const mapToWallet = walletEntity => {
   };
 };
 
-export const mapToWalletArray = walletsEntities => {
+const mapToWalletArray = walletsEntities => {
   const wallets = [];
 
   for (const walletEntity of walletsEntities) {
@@ -16,4 +15,9 @@ export const mapToWalletArray = walletsEntities => {
   }
 
   return wallets;
+};
+
+module.exports = {
+  mapToWalletArray,
+  mapToWallet,
 };

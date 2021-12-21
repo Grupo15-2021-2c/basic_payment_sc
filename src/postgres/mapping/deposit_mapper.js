@@ -1,5 +1,4 @@
-
-export const mapToDeposit = depositEntity => {
+const mapToDeposit = depositEntity => {
   return {
     id: depositEntity.id,
     wallet_id: depositEntity.wallet_id,
@@ -10,7 +9,7 @@ export const mapToDeposit = depositEntity => {
   };
 };
 
-export const mapToDepositArray = DepositsEntities => {
+const mapToDepositArray = DepositsEntities => {
   const deposits = [];
 
   for (const DepositEntity of DepositsEntities) {
@@ -18,4 +17,9 @@ export const mapToDepositArray = DepositsEntities => {
   }
 
   return deposits;
+};
+
+module.exports = {
+  mapToDepositArray,
+  mapToDeposit,
 };
