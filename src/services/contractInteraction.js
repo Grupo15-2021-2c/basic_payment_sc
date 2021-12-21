@@ -6,24 +6,8 @@ const getContract = (config, wallet) => {
   return new ethers.Contract(config.contractAddress, config.contractAbi, wallet);
 };
 
-const someMonth = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-const d = new Date();
-let aMonth = someMonth[d.getMonth()];
-
-const deposit = ({ config }) => async (senderWallet, amountToSend) => {
+const deposit = ({ config }) => async (senderWallet, amountToSend, walletId) => {
+  const date = new Date();
   const basicPayments = await getContract(config, senderWallet);
   const tx = await basicPayments.deposit({
     value: await ethers.utils.parseEther(amountToSend).toHexString(),
@@ -36,12 +20,12 @@ const deposit = ({ config }) => async (senderWallet, amountToSend) => {
       if (firstEvent && firstEvent.event == "DepositMade") {
         const someDeposit = await deposits.create({
           id: tx.hash.toString(),
-          sender_address: firstEvent.args.sender.address,
-          amount: firstEvent.args.amount.toString(),
-          wallet_id: senderWallet.id,
-          month: parseInt(aMonth),
-          year: d.getFullYear(),
+          amount: parseFloat(amountToSend),
+          wallet_id: walletId,
+          month: date.getMonth(),
+          year: date.getFullYear(),
         });
+        console.log("Persisted deposit", JSON.stringify(someDeposit));
       } else {
         console.error(`Payment not created in tx ${tx.hash}`);
       }

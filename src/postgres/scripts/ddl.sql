@@ -1,15 +1,16 @@
 CREATE TABLE WALLET (
     ID            SERIAL PRIMARY KEY,
-    USER_ID         VARCHAR(50)  NOT NULL UNIQUE,
-    PRIVATE_KEY    VARCHAR(100) NOT NULL,
-    ADDRESS     VARCHAR(100) NOT NULL,
+    USER_ID         VARCHAR(5000)  NOT NULL UNIQUE,
+    PRIVATE_KEY    VARCHAR(1000) NOT NULL,
+    ADDRESS     VARCHAR(1000) NOT NULL,
 );
 
 CREATE TABLE DEPOSIT (
-                      ID                SERIAL PRIMARY KEY,
-                      WALLET_ID         VARCHAR(50)  NOT NULL UNIQUE,
-                      SENDER_ADDRESS    VARCHAR(100) NOT NULL,
-                      AMOUNT            INTEGER NOT NULL,
-                      MONTH             INTEGER NOT NULL,
-                      YEAR              INTEGER NOT NULL,
+                              id serial4 NOT NULL,
+                              wallet_id varchar(5000) NOT NULL,
+                              amount float8 NOT NULL,
+                              "month" int4 NOT NULL,
+                              "year" int4 NOT NULL,
+                              CONSTRAINT deposit_pkey PRIMARY KEY (id),
+                              CONSTRAINT deposit_un UNIQUE (wallet_id, month, year)
 );
