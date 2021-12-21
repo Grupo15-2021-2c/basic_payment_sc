@@ -39,7 +39,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-db-lb
+  name: psql-payments-lb
 spec:
   selector:
     app: psql-payments
