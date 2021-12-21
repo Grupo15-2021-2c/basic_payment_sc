@@ -30,11 +30,11 @@ const getWalletData = () => index => {
   return accounts.findById(index);
 };
 
-const getWallet = index => {
+const getWallet = async index => {
   console.log("index", index, "infura key", process.env.INFURA_API_KEY);
   const provider = new ethers.providers.InfuraProvider("kovan", process.env.INFURA_API_KEY);
-  console.log("pk", JSON.stringify(getWalletData()(index).private_key));
-  return new ethers.Wallet(getWalletData()(index).private_key, provider);
+  console.log("pk", JSON.stringify(await getWalletData()(index).private_key));
+  return new ethers.Wallet(await getWalletData()(index).private_key, provider);
 };
 
 module.exports = ({ config }) => ({
