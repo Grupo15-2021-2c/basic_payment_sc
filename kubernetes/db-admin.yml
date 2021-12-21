@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pgweb
+  name: pgweb-payments
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pgweb
+      app: pgweb-payments
   template:
     metadata:
       labels:
-        app: pgweb
+        app: pgweb-payments
     spec:
       containers:
-        - name: pgweb
+        - name: pgweb-payments
           image: sosedoff/pgweb
           imagePullPolicy: "IfNotPresent"
           ports:
@@ -29,13 +29,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: pgweb
+  name: pgweb-payments
   labels:
-    app: pgweb
+    app: pgweb-payments
 spec:
   ports:
     - port: 80
       targetPort: 8081
   selector:
-    app: pgweb
+    app: pgweb-payments
   type: NodePort
