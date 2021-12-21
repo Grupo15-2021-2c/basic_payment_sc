@@ -1,7 +1,5 @@
-import { WalletEntity } from "../entity/wallet_entity";
-import { Wallet } from "../../model/wallet";
 
-export const mapToWallet = (walletEntity: WalletEntity): Wallet => {
+export const mapToWallet = walletEntity => {
   return {
     id: walletEntity.id,
     user_id: walletEntity.user_id,
@@ -10,7 +8,7 @@ export const mapToWallet = (walletEntity: WalletEntity): Wallet => {
   };
 };
 
-export const mapToWalletArray = (walletsEntities: WalletEntity[]): Wallet[] => {
+export const mapToWalletArray = walletsEntities => {
   const wallets = [];
 
   for (const walletEntity of walletsEntities) {
