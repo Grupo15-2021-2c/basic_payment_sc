@@ -1,4 +1,3 @@
-import { Deposit } from "../../model/deposit";
 import { connectionPool } from "../connection_pool";
 import * as DepositMapper from "../mapping/deposit_mapper";
 

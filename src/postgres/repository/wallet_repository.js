@@ -1,4 +1,3 @@
-import { Wallet } from "../../model/wallet";
 import { connectionPool } from "../connection_pool";
 import * as WalletMapper from "../mapping/wallet_mapper";
 
