@@ -18,7 +18,7 @@ const createWallet = () => async () => {
     id: walletsCount.toString(),
     user_id: 1, //TODO: pedir user_id con endpoint
     address: wallet.address,
-    private_key: wallet.private_key,
+    private_key: wallet.privateKey,
   });
 };
 
