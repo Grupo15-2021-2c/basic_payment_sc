@@ -21,7 +21,7 @@ const create = async newWallet => {
 };
 
 const findAll = async () => {
-  const client = await connectionPool.connect();
+  const client = await connectionPool.connectionPool.connect();
 
   try {
     const { rows } = await client.query("SELECT * FROM " + tableName);
@@ -35,7 +35,7 @@ const findAll = async () => {
 };
 
 const findById = async id => {
-  const client = await connectionPool.connect();
+  const client = await connectionPool.connectionPool.connect();
 
   try {
     const { rows } = await client.query("SELECT * FROM " + tableName + " WHERE ID = $1", [id]);
@@ -53,7 +53,7 @@ const findById = async id => {
 };
 
 const remove = async id => {
-  const client = await connectionPool.connect();
+  const client = await connectionPool.connectionPool.connect();
 
   try {
     await client.query("DELETE FROM " + tableName + " WHERE ID = $1", [id]);
@@ -65,7 +65,7 @@ const remove = async id => {
 };
 
 const count = async () => {
-  const client = await connectionPool.connect();
+  const client = await connectionPool.connectionPool.connect();
 
   try {
     const { rows } = await client.query("SELECT COUNT(*) FROM " + tableName);
