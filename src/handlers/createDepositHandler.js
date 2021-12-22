@@ -19,7 +19,11 @@ function handler({ contractInteraction, walletService }) {
   return async function (req) {
     const userId = req.params.userId;
     const walletId = await walletService.getWalletIdWithUserId(userId);
-    return contractInteraction.deposit(await walletService.getWallet(walletId), req.body.amountInEthers, walletId);
+    return await contractInteraction.deposit(
+      await walletService.getWallet(walletId),
+      req.body.amountInEthers,
+      walletId,
+    );
   };
 }
 
