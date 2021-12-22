@@ -11,7 +11,7 @@ const deposit = ({ config }) => async (senderWallet, amountToSend, walletId) => 
   const date = new Date();
   const basicPayments = await getContract(config, senderWallet);
   const tx = await basicPayments.deposit({
-    value: await ethers.utils.parseEther(amountToSend).toHexString(),
+    value: ethers.utils.parseEther(amountToSend).toHexString(),
   });
   tx.wait(1).then(
     async receipt => {

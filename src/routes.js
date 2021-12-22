@@ -34,7 +34,7 @@ function createWalletRoute({ services, config }) {
 function createDepositRoute({ services, config }) {
   return {
     method: "POST",
-    url: "/deposit",
+    url: "/users/:userId/deposit",
     schema: createDeposit.schema(config),
     handler: createDeposit.handler({ config, ...services }),
   };
