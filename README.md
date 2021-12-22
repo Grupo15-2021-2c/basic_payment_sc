@@ -2,6 +2,10 @@
 
 Based on the smart-contract-basic-service to solve payments in the Taller de Programacion 2' projects.
 
+## Deployments
+Ubademy payments is deployed on Okteto
+- Production [branch main] [Ubademy Payments (Okteto)](https://payments-lorenzolgz.cloud.okteto.net)
+
 ## Setup
 
 * Requirement: node v12.18.1 required
