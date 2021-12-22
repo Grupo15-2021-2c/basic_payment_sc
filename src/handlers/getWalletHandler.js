@@ -16,7 +16,6 @@ function schema() {
 
 function handler({ walletService }) {
   return async function (req, reply) {
-    console.log("ws", walletService);
     const wallet = await findByUserId(req.params.userId);
     const code = !wallet ? 404 : 200;
     const body = !wallet

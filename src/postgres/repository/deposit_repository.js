@@ -55,7 +55,6 @@ const findById = async id => {
 const findByWalletId = async ({ walletId, month, year }) => {
   const client = await connectionPool.connectionPool.connect();
 
-  console.log(walletId, month, year);
   try {
     const { rows } = await client.query(
       "SELECT * FROM " + tableName + " WHERE WALLET_ID = $1 AND MONTH = $2 AND YEAR = $3",
