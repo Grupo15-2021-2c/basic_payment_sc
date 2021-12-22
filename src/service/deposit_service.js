@@ -13,6 +13,12 @@ const findById = async idDeposit =>
 const create = async newDeposit =>
   wrapWithUnknownError(() => DepositRepository.create(newDeposit), `Unable to create deposit due to unknown error`);
 
+const findByWalletId = async ({ walletId, month, year }) =>
+  wrapWithUnknownError(
+    () => DepositRepository.findByWalletId({ walletId, month, year }),
+    `Unable to create deposit due to unknown error`,
+  );
+
 const wrapWithUnknownError = (process, message) =>
   process().catch(err => {
     console.error("Unable to operate with deposit service due to error", err);
@@ -23,4 +29,5 @@ module.exports = {
   findAll,
   findById,
   create,
+  findByWalletId,
 };

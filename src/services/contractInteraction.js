@@ -43,8 +43,9 @@ const deposit = ({ config }) => async (senderWallet, amountToSend, walletId) => 
   return tx;
 };
 
-const getDepositReceipt = ({}) => async depositTxHash => {
-  return deposits.findById(depositTxHash);
+const getDepositReceipt = ({}) => async walletId => {
+  const date = new Date();
+  return await deposits.findByWalletId({ walletId, month: date.getMonth(), year: date.getFullYear() });
 };
 
 module.exports = dependencies => ({

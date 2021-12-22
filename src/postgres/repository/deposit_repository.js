@@ -21,7 +21,7 @@ const create = async newDeposit => {
 };
 
 const findAll = async () => {
-  const client = await connectionPool.connect();
+  const client = await connectionPool.connectionPool.connect();
 
   try {
     const { rows } = await client.query("SELECT * FROM " + tableName);
@@ -35,7 +35,7 @@ const findAll = async () => {
 };
 
 const findById = async id => {
-  const client = await connectionPool.connect();
+  const client = await connectionPool.connectionPool.connect();
 
   try {
     const { rows } = await client.query("SELECT * FROM " + tableName + " WHERE ID = $1", [id]);
@@ -52,8 +52,30 @@ const findById = async id => {
   }
 };
 
+const findByWalletId = async ({ walletId, month, year }) => {
+  const client = await connectionPool.connectionPool.connect();
+
+  console.log(walletId, month, year);
+  try {
+    const { rows } = await client.query(
+      "SELECT * FROM " + tableName + " WHERE WALLET_ID = $1 AND MONTH = $2 AND YEAR = $3",
+      [walletId, month, year],
+    );
+
+    if (rows[0]) {
+      return { status: "success", data: DepositMapper.mapToDeposit(rows[0]) };
+    } else {
+      return { status: "error", code: 404, message: "Unable to find deposit" };
+    }
+  } catch (exception) {
+    throw exception;
+  } finally {
+    client.release();
+  }
+};
+
 const remove = async id => {
-  const client = await connectionPool.connect();
+  const client = await connectionPool.connectionPool.connect();
 
   try {
     await client.query("DELETE FROM " + tableName + " WHERE ID = $1", [id]);
@@ -67,6 +89,7 @@ const remove = async id => {
 module.exports = {
   remove,
   findById,
+  findByWalletId,
   findAll,
   create,
 };

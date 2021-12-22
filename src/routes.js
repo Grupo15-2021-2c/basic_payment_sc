@@ -25,7 +25,7 @@ function getWalletsDataRoute({ services, config }) {
 function createWalletRoute({ services, config }) {
   return {
     method: "POST",
-    url: "/wallet",
+    url: "/users/:userId/wallet",
     schema: createWallet.schema(config),
     handler: createWallet.handler({ config, ...services }),
   };
@@ -40,13 +40,13 @@ function createDepositRoute({ services, config }) {
   };
 }
 
-function getDepositRoute({ services, config }) {
+function getUserDepositRoute({ services, config }) {
   return {
     method: "GET",
-    url: "/deposit/:txHash",
+    url: "/users/:userId/deposit",
     schema: getDeposit.schema(config),
     handler: getDeposit.handler({ config, ...services }),
   };
 }
 
-module.exports = [getWalletDataRoute, getWalletsDataRoute, createWalletRoute, createDepositRoute, getDepositRoute];
+module.exports = [getWalletDataRoute, getWalletsDataRoute, createWalletRoute, createDepositRoute, getUserDepositRoute];

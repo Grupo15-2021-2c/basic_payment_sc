@@ -3,7 +3,7 @@ function schema() {
     params: {
       type: "object",
       properties: {
-        id: {
+        userId: {
           type: "integer",
         },
       },
@@ -14,7 +14,7 @@ function schema() {
 
 function handler({ walletService }) {
   return async function (req, reply) {
-    const body = await walletService.createWallet(req.body.id);
+    const body = await walletService.createWallet(req.params.userId);
     return reply.code(200).send(body);
   };
 }
