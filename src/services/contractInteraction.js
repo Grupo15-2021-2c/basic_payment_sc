@@ -1,6 +1,7 @@
 const ethers = require("ethers");
 const getDepositHandler = require("../handlers/getDepositHandler");
 const deposits = require("../service/deposit_service");
+const { findByUserId } = require("../postgres/repository/wallet_repository");
 
 const getContract = (config, wallet) => {
   return new ethers.Contract(config.contractAddress, config.contractAbi, wallet);
@@ -43,9 +44,15 @@ const deposit = ({ config }) => async (senderWallet, amountToSend, walletId) => 
   return tx;
 };
 
-const getDepositReceipt = ({}) => async walletId => {
+const getDepositReceipt = ({}) => async userId => {
   const date = new Date();
-  return await deposits.findByWalletId({ walletId, month: date.getMonth(), year: date.getFullYear() });
+  const wallet = await findByUserId(userId);
+  if (!wallet) {
+    return { status: "error", code: 404, message: `Wallet not found for user with id ${userId}` };
+  } else {
+    const walletId = wallet.id;
+    return await deposits.findByWalletId({ walletId, month: date.getMonth(), year: date.getFullYear() });
+  }
 };
 
 module.exports = dependencies => ({
