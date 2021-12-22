@@ -55,6 +55,27 @@ const findById = async id => {
   }
 };
 
+const findByUserId = async userId => {
+  const client = await connectionPool.connectionPool.connect();
+
+  try {
+    const { rows } = await client.query("SELECT * FROM " + tableName + " WHERE USER_ID = $1", [userId]);
+
+    console.log("wallet_repository found", JSON.stringify(rows));
+
+    if (rows[0]) {
+      console.log("wallet_repository will return", JSON.stringify(WalletMapper.mapToWallet(rows[0])));
+      return WalletMapper.mapToWallet(rows[0]);
+    } else {
+      return null;
+    }
+  } catch (exception) {
+    throw exception;
+  } finally {
+    client.release();
+  }
+};
+
 const remove = async id => {
   const client = await connectionPool.connectionPool.connect();
 
@@ -89,6 +110,7 @@ module.exports = {
   create,
   findAll,
   findById,
+  findByUserId,
   count,
   remove,
 };
